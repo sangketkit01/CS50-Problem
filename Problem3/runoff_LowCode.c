@@ -13,7 +13,6 @@
 
 bool vote(char* name , int rank);
 char *upperString(char *s);
-void capitalize(char *s);
 char *removeSpace(const char *s);
 bool stringCompare(char* s1,char* s2);
 int stringLength(char* s);
@@ -28,6 +27,7 @@ Candidates candidate[MAX];
 
 int candidate_count;
 char* newString;
+char *upper;
 
 int main(int argc,char** argv){
     if(argc<2){
@@ -69,10 +69,10 @@ int main(int argc,char** argv){
             winner = candidate[i].name;
         }
     }
-    capitalize(winner);
     printf("%s\n",winner);
     
     free(newString);
+    free(upper);
 
     return 0;
 }
@@ -87,26 +87,33 @@ bool vote(char*name , int rank){
     return false;
 }
 
+
 char* upperString(char* s){
-    for(int i = 0 ; i<stringLength(s) ;i++){
-        if(s[i] <= 90){
-            s[i] = s[i]+32;
-        }
-    }
-    return s;
 
-}
-void capitalize(char* s){
-    if(s[0] > 90){
-        s[0] = s[0]-32;
-    }
-    for(int i = 1 ; i<stringLength(s) ; i++){
-        if(s[i] <= 90){
-            s[i] = s[i]+32;
-        }
+    upper = malloc(stringLength(s) + 1); // Upper has Declared on the top of main function
+
+    if(upper == NULL){
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
     }
 
+    int index;
+    int length = 0;
+    for(index = 0 ;s[index] != '\0';index++){
+        upper[index] = s[index];
+        length++;
+    }
+    upper[index] = '\0';
+    
+    for(int i = 0 ; i<length ;i++){
+        if(upper[i] <= 90){
+            upper[i] = upper[i]+32;
+        }
+    }
+    return upper;
+
 }
+
 char* removeSpace(const char* s) {
     int newSize = 0;
     for(int i = 0 ;i<stringLength(s);i++){
@@ -114,7 +121,8 @@ char* removeSpace(const char* s) {
             newSize++;
         }
     }
-    newString = malloc(newSize + 1); 
+
+    newString = malloc(newSize + 1);  // newString has Declared on the top of main function
     if (newString == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);

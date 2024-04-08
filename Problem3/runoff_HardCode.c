@@ -10,12 +10,12 @@
 bool checkCandidate(string vote, int argc, char *argv[]);
 int voteCandidate(char **candidate, char *vote, int numberOfCandidate);
 char *upperString(char *s);
-void capitalize(char *s);
 char *removeSpace(char *s);
 bool stringCompare(char *s1, char *s2);
 int stringLength(char *s);
 
 char *newString;
+char *upper;
 
 int main(int argc, char *argv[])
 {
@@ -66,12 +66,12 @@ int main(int argc, char *argv[])
             maxIndex = i - 1;
         }
     }
-    capitalize(candidates[maxIndex]);
     printf("%s\n", candidates[maxIndex]);
 
     free(score);
     free(candidates);
     free(newString);
+    free(upper);
 
     return 0;
 }
@@ -100,29 +100,34 @@ int voteCandidate(char **candidate, char *vote, int numberOfCandidate)
 
 char *upperString(char *s)
 {
-    for (int i = 0; i < stringLength(s); i++)
+
+    upper = malloc(stringLength(s) + 1); // Upper has Declared on the top of main function
+
+    if (upper == NULL)
     {
-        if (s[i] <= 90)
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int index;
+    int length = 0;
+    for (index = 0; s[index] != '\0'; index++)
+    {
+        upper[index] = s[index];
+        length++;
+    }
+    upper[index] = '\0';
+
+    for (int i = 0; i < length; i++)
+    {
+        if (upper[i] <= 90)
         {
-            s[i] = s[i] + 32;
+            upper[i] = upper[i] + 32;
         }
     }
-    return s;
+    return upper;
 }
-void capitalize(char *s)
-{
-    if (s[0] > 90)
-    {
-        s[0] = s[0] - 32;
-    }
-    for (int i = 1; i < stringLength(s); i++)
-    {
-        if (s[i] <= 90)
-        {
-            s[i] = s[i] + 32;
-        }
-    }
-}
+
 char *removeSpace(char *s)
 {
     int newSize = 0;
@@ -134,7 +139,7 @@ char *removeSpace(char *s)
         }
     }
 
-    newString = malloc(newSize + 1);
+    newString = malloc(newSize + 1); // newString has declared in the top of main function
     if (newString == NULL)
     {
         fprintf(stderr, "Memory allocation failed\n");
