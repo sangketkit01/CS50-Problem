@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <cs50.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define MAX 9
 
@@ -16,6 +15,8 @@ bool vote(char* name , int rank);
 char *upperString(char *s);
 void capitalize(char *s);
 char *removeSpace(const char *s);
+bool stringCompare(char* s1,char* s2);
+int stringLength(char* s);
 
 typedef struct{
     char* name;
@@ -78,7 +79,7 @@ int main(int argc,char** argv){
 
 bool vote(char*name , int rank){
     for(int i = 0 ;i<candidate_count;i++){
-        if(strcmp(upperString(candidate[i].name),upperString(name)) == 0){
+        if(stringCompare(upperString(candidate[i].name),upperString(name))){
             candidate[i].votes += rank;
             return true;
         }
@@ -87,7 +88,7 @@ bool vote(char*name , int rank){
 }
 
 char* upperString(char* s){
-    for(int i = 0 ; i<strlen(s) ;i++){
+    for(int i = 0 ; i<stringLength(s) ;i++){
         if(s[i] <= 90){
             s[i] = s[i]+32;
         }
@@ -99,7 +100,7 @@ void capitalize(char* s){
     if(s[0] > 90){
         s[0] = s[0]-32;
     }
-    for(int i = 1 ; i<strlen(s) ; i++){
+    for(int i = 1 ; i<stringLength(s) ; i++){
         if(s[i] <= 90){
             s[i] = s[i]+32;
         }
@@ -108,7 +109,7 @@ void capitalize(char* s){
 }
 char* removeSpace(const char* s) {
     int newSize = 0;
-    for(int i = 0 ;i<strlen(s);i++){
+    for(int i = 0 ;i<stringLength(s);i++){
         if(s[i] != ' '){
             newSize++;
         }
@@ -128,4 +129,25 @@ char* removeSpace(const char* s) {
     newString[j] = '\0';
 
     return newString;
+}
+
+bool stringCompare(char* s1,char* s2){
+    if(stringLength(s1) != stringLength(s2)){
+        return false;
+    }
+
+    for(int i = 0 ; i<stringLength(s1) ; i++){
+        if(s1[i] != s2[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
+int stringLength(char* s){
+    int length = 0;
+    for(int i = 0 ; s[i] != '\0' ; i++){
+        length++;
+    }
+    return length;
 }

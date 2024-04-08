@@ -6,13 +6,14 @@
 #include <stdio.h>
 #include <cs50.h>
 #include <stdlib.h>
-#include <string.h>
 
 bool checkCandidate(string vote, int argc, char *argv[]);
 int voteCandidate(char **candidate, char *vote, int numberOfCandidate);
 char *upperString(char *s);
 void capitalize(char *s);
-char *removeSpace(const char *s);
+char *removeSpace(char *s);
+bool stringCompare(char *s1, char *s2);
+int stringLength(char *s);
 
 char *newString;
 
@@ -79,8 +80,7 @@ bool checkCandidate(string vote, int argc, char *argv[])
 {
     for (int i = 0; i < argc; i++)
     {
-        if (strcmp(upperString(vote), upperString(argv[i])) == 0)
-        {
+        if(stringCompare(upperString(vote),upperString(argv[i]))){
             return true;
         }
     }
@@ -91,8 +91,7 @@ int voteCandidate(char **candidate, char *vote, int numberOfCandidate)
 {
     for (int i = 0; i < numberOfCandidate; i++)
     {
-        if (strcmp(upperString(candidate[i]), upperString(vote)) == 0)
-        {
+        if(stringCompare(upperString(candidate[i]),upperString(vote))){
             return i;
         }
     }
@@ -101,7 +100,7 @@ int voteCandidate(char **candidate, char *vote, int numberOfCandidate)
 
 char *upperString(char *s)
 {
-    for (int i = 0; i < strlen(s); i++)
+    for (int i = 0; i < stringLength(s); i++)
     {
         if (s[i] <= 90)
         {
@@ -116,7 +115,7 @@ void capitalize(char *s)
     {
         s[0] = s[0] - 32;
     }
-    for (int i = 1; i < strlen(s); i++)
+    for (int i = 1; i < stringLength(s); i++)
     {
         if (s[i] <= 90)
         {
@@ -124,10 +123,10 @@ void capitalize(char *s)
         }
     }
 }
-char *removeSpace(const char *s)
+char *removeSpace(char *s)
 {
     int newSize = 0;
-    for (int i = 0; i < strlen(s); i++)
+    for (int i = 0; i < stringLength(s); i++)
     {
         if (s[i] != ' ')
         {
@@ -153,4 +152,31 @@ char *removeSpace(const char *s)
     newString[j] = '\0';
 
     return newString;
+}
+
+bool stringCompare(char *s1, char *s2)
+{
+    if (stringLength(s1) != stringLength(s2))
+    {
+        return false;
+    }
+
+    for (int i = 0; i < stringLength(s1); i++)
+    {
+        if (s1[i] != s2[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int stringLength(char *s)
+{
+    int length = 0;
+    for (int i = 0; s[i] != '\0'; i++)
+    {
+        length++;
+    }
+    return length;
 }
