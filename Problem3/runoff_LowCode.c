@@ -96,7 +96,7 @@ char* upperString(char* s){
 
 }
 void capitalize(char* s){
-    if(s[0] >= 90){
+    if(s[0] > 90){
         s[0] = s[0]-32;
     }
     for(int i = 1 ; i<strlen(s) ; i++){
@@ -113,7 +113,7 @@ char* removeSpace(const char* s) {
             newSize++;
         }
     }
-    char* newString = malloc(newSize + 1); 
+    newString = malloc(newSize + 1); 
     if (newString == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
