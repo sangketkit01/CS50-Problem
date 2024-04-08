@@ -1,3 +1,7 @@
+//************************ This runoff i've done , i did it without understanding what runoff actually is ***********************
+//************************ Cause i didn't watch walkthrough video so i don't know what function is required to have ***********************
+//************************ Harvard did make requirement that everyone must follow but i didn't  ***********************
+//************************ Anyway i've done this in my own way even it's not it should be but it's work  in it own way ***********************
 #include <stdio.h>
 #include <cs50.h>
 #include <stdlib.h>
