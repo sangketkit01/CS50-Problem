@@ -12,6 +12,7 @@ int voteCandidate(char **candidate, char *vote, int numberOfCandidate);
 char *upperString(char *s);
 char *removeSpace(char *s);
 bool stringCompare(char *s1, char *s2);
+bool stringCompareIgnoreCase(char *s1, char *s2);
 int stringLength(char *s);
 
 char *newString;
@@ -70,8 +71,6 @@ int main(int argc, char *argv[])
 
     free(score);
     free(candidates);
-    free(newString);
-    free(upper);
 
     return 0;
 }
@@ -80,7 +79,8 @@ bool checkCandidate(string vote, int argc, char *argv[])
 {
     for (int i = 0; i < argc; i++)
     {
-        if(stringCompare(upperString(vote),upperString(argv[i]))){
+        if (stringCompare(upperString(vote), upperString(argv[i])))
+        {
             return true;
         }
     }
@@ -91,7 +91,8 @@ int voteCandidate(char **candidate, char *vote, int numberOfCandidate)
 {
     for (int i = 0; i < numberOfCandidate; i++)
     {
-        if(stringCompare(upperString(candidate[i]),upperString(vote))){
+        if (stringCompare(upperString(candidate[i]), upperString(vote)))
+        {
             return i;
         }
     }
@@ -176,6 +177,24 @@ bool stringCompare(char *s1, char *s2)
     return true;
 }
 
+bool stringCompareIgnoreCase(char *s1, char *s2)
+{
+    if (stringLength(s1) != stringLength(s2) || s1 == NULL || s2 == NULL)
+    {
+        return false;
+    }
+
+    char *newS1 = upperString(s1), newS2 = upperString(s2);
+    for (int i = 0; newS1[i] != '\0' && newS2[i] != '\0'; i++)
+    {
+        if (newS1[i] != newS2[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 int stringLength(char *s)
 {
     int length = 0;
@@ -185,3 +204,6 @@ int stringLength(char *s)
     }
     return length;
 }
+
+free(newString);
+free(upper);
