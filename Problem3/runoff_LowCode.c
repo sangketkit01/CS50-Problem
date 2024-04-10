@@ -140,7 +140,7 @@ char* removeSpace(const char* s) {
 }
 
 bool stringCompare(char* s1,char* s2){
-    if(stringLength(s1) != stringLength(s2)){
+    if(stringLength(s1) != stringLength(s2) || s1 == NULL || s2 == NULL){
         return false;
     }
 
