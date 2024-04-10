@@ -117,9 +117,9 @@ char *upperString(char *s)
 
     for (int i = 0; i < length; i++)
     {
-        if (upper[i] <= 90)
+        if (upper[i] > 90)
         {
-            upper[i] = upper[i] + 32;
+            upper[i] = upper[i] - 32;
         }
     }
     return upper;
